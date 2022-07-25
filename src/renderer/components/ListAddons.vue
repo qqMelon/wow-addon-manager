@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import AppLoader from '@/components/AppLoader.vue';
+import AppButton from '@/components/AppButton.vue';
 import { onMounted, ref } from 'vue';
+
 const props = defineProps({
   baseURL: {
     type: String,
     default: 'https://api.curseforge.com',
   },
 });
+
+const loading: boolean = ref(true);
 
 const listAddons: any = ref(null);
 const init: any = {
@@ -21,6 +26,7 @@ onMounted(() => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
+      loading.value = false;
       listAddons.value = data.data;
     })
     .catch(error => {
@@ -30,24 +36,30 @@ onMounted(() => {
 </script>
 
 <template>
-  <table class="table-auto w-full">
-    <thead>
+  <AppLoader v-if="loading" />
+  <table v-else class="table table-list-addon rounded-lg table-auto w-full bg-primary-bg">
+    <thead class="bg-primary-bg">
       <tr>
-        <th class="px-4 py-2">Nom</th>
-        <th class="px-4 py-2">Version</th>
-        <th class="px-4 py-2">Ajouté le</th>
-        <th class="px-4 py-2">Actions</th>
+        <th class="text-white text-xl float-left px-4 py-2">Addon</th>
+        <th class="text-white text-xl px-4 py-2">Version</th>
+        <th class="text-white text-xl px-4 py-2">Auteur</th>
+        <th class="text-white text-xl px-4 py-2">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="addon in listAddons">
-        <td class="border px-4 py-2">{{ addon.name }}</td>
-        <td class="border px-4 py-2">{{ addon.gameVersion }}</td>
-        <td class="border px-4 py-2">{{ addon.releaseDate }}</td>
-        <td class="border px-4 py-2">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" @click="onGetAddons = !onGetAddons">
-            Installer
-          </button>
+      <tr v-for="addon in listAddons" class="item-table">
+        <td class="item-row text-white px-4 py-2">
+          <span>{{ addon.name }}</span>
+          <span class="text-sm font-light">{{ addon.categories[0].name }}</span>
+        </td>
+        <td class="item-row px-4 py-2">{{ addon.gameVersion }}</td>
+        <td class="item-row text-white px-4 py-2">{{ addon.authors[0].name }}</td>
+        <td class="item-row px-4 py-2">
+          <AppButton @click="">
+            <slot>
+              <span class="text-sm font-light">Installer</span>
+            </slot>
+          </AppButton>
         </td>
       </tr>
     </tbody>

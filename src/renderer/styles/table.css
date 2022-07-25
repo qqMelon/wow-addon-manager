@@ -1,0 +1,14 @@
+/* List addon table */
+
+table.table-list-addon {
+  border-collapse: separate;
+}
+
+table.table-list-addon thead {
+  height: 60px;
+}
+
+table.table-list-addon tbody tr.item-table td.item-row:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+}

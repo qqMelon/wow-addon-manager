@@ -6,10 +6,9 @@ import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
 import { User, Navigation, UserNavigation } from '../interfaces/navigator'
 
 const user: User = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  name: 'Alextrasza',
+  email: 'alextrasza@dragonflight.bnet',
+  imageUrl: '/images/alextrsza_profile.jpg',
 }
 const navigation: Array<Navigation> = [
   { name: 'Addons', href: '#', current: true },
@@ -25,7 +24,7 @@ const userNavigation: Array<UserNavigation> = [
 
 <template>
   <div class="min-h-full">
-    <Disclosure as="nav" class="bg-gray-900" v-slot="{ open }">
+    <Disclosure as="nav" class="bg-primary-bg" v-slot="{ open }">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
