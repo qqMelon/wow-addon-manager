@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import SearchBar from '@/components/SearchBar.vue'
-import ListAddons from '@/components/ListAddons.vue'
-import AppButton from '@/components/AppButton.vue'
+import SearchBar from '@/components/SearchBar.vue';
+import ListAddons from '@/components/ListAddons.vue';
+import AppButton from '@/components/AppButton.vue';
 import { ref } from 'vue';
 
 const onGetAddons: boolean = ref(false);

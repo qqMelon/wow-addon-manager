@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLoader from '@/components/AppLoader.vue';
 import AppButton from '@/components/AppButton.vue';
+import { DownloadIcon, XIcon } from '@heroicons/vue/outline';
 import { onMounted, ref } from 'vue';
 
 const props = defineProps({
@@ -38,7 +39,7 @@ onMounted(() => {
 <template>
   <AppLoader v-if="loading" />
   <table v-else class="table table-list-addon rounded-lg table-auto w-full bg-primary-bg">
-    <thead class="bg-primary-bg">
+    <thead class="bg-primary-bg drop-shadow-lg">
       <tr>
         <th class="text-white text-xl float-left px-4 py-2">Addon</th>
         <th class="text-white text-xl px-4 py-2">Version</th>
@@ -50,13 +51,14 @@ onMounted(() => {
       <tr v-for="addon in listAddons" class="item-table">
         <td class="item-row text-white px-4 py-2">
           <span>{{ addon.name }}</span>
-          <span class="text-sm font-light">{{ addon.categories[0].name }}</span>
+          <span class="text-sm font-thin font-light">{{ addon.categories[0].name }}</span>
         </td>
-        <td class="item-row px-4 py-2">{{ addon.gameVersion }}</td>
+        <td class="item-row text-white font-thin px-4 py-2">{{ addon.latestFiles[0]?.gameVersions[0] }}</td>
         <td class="item-row text-white px-4 py-2">{{ addon.authors[0].name }}</td>
         <td class="item-row px-4 py-2">
           <AppButton @click="">
             <slot>
+              <DownloadIcon class="h-4 w-4" aria-hidden="true" />
               <span class="text-sm font-light">Installer</span>
             </slot>
           </AppButton>
