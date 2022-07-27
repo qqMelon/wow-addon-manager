@@ -1,0 +1,8 @@
+#app > main > div > div > div.list-addon-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#app > main > div > div > div.list-addon-container > div.header-list-addon {
+  width: 100%;
+}

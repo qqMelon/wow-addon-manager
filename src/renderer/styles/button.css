@@ -1,0 +1,5 @@
+#app > main > div > div > div > table > tbody > tr > td > button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

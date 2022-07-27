@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import AppLoader from '@/components/AppLoader.vue';
 import AppButton from '@/components/AppButton.vue';
+import DetailAddon from '@/components/DetailAddon.vue';
 import { DownloadIcon, XIcon } from '@heroicons/vue/outline';
 import { onMounted, ref } from 'vue';
 
@@ -22,12 +23,21 @@ const init: any = {
   },
 }
 
+// Details of the addon section
+const showDetail: boolean = ref(false);
+const addonSelected: any = ref({});
+
+const showAddonDetail = function (addon: any) {
+  showDetail.value = true;
+  addonSelected.value = addon;
+}
+
 onMounted(() => {
   fetch(`${props.baseURL}/v1/mods/search?gameId=1`, init)
     .then(response => response.json())
     .then(data => {
-      console.log(data);
       loading.value = false;
+      console.log(data);
       listAddons.value = data.data;
     })
     .catch(error => {
@@ -37,21 +47,27 @@ onMounted(() => {
 </script>
 
 <template>
+  <DetailAddon v-if="showDetail" :addon="addonSelected" :showPanel="showDetail" @closePanel="showDetail = false" />
   <AppLoader v-if="loading" />
   <table v-else class="table table-list-addon rounded-lg table-auto w-full bg-primary-bg">
     <thead class="bg-primary-bg drop-shadow-lg">
       <tr>
-        <th class="text-white text-xl float-left px-4 py-2">Addon</th>
+        <th class="text-white text-xl table-cell text-left px-4 py-2">Addon</th>
         <th class="text-white text-xl px-4 py-2">Version</th>
         <th class="text-white text-xl px-4 py-2">Auteur</th>
         <th class="text-white text-xl px-4 py-2">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="addon in listAddons" class="item-table">
+      <tr v-for="addon in listAddons" class="item-table hover:bg-primary-light-bg hover:cursor-pointer" @click="showAddonDetail(addon)">
         <td class="item-row text-white px-4 py-2">
-          <span>{{ addon.name }}</span>
-          <span class="text-sm font-thin font-light">{{ addon.categories[0].name }}</span>
+          <div class="image-container">
+            <img class="h-10 rounded float-left" v-if="addon.logo" :src="addon.logo.thumbnailUrl" :alt="addon.name">
+          </div>
+          <div class="first-data-container ml-3">
+            <span>{{ addon.name }}</span>
+            <span class="text-sm font-thin font-light">{{ addon.categories[0].name }}</span>
+          </div>
         </td>
         <td class="item-row text-white font-thin px-4 py-2">{{ addon.latestFiles[0]?.gameVersions[0] }}</td>
         <td class="item-row text-white px-4 py-2">{{ addon.authors[0].name }}</td>
