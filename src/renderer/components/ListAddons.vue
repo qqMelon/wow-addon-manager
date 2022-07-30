@@ -10,11 +10,15 @@ const props = defineProps({
     type: String,
     default: 'https://api.curseforge.com',
   },
+  versionSelected: {
+    type: String,
+    default: '9.2.5'
+  }
 });
 
 const loading: boolean = ref(true);
 
-const listAddons: any = ref(null);
+const listAddons: any = ref(new Array());
 const init: any = {
   method: 'GET',
   headers: {
@@ -32,13 +36,20 @@ const showAddonDetail = function (addon: any) {
   addonSelected.value = addon;
 }
 
+const listAddonsByVersion = function (listAddon: any) {
+  listAddon.forEach(el => {
+    if(el.latestFiles.length && el.latestFiles[0].gameVersions.includes(`${props.versionSelected}`)) {
+      listAddons.value.push(el);
+    }
+  });
+};
+
 onMounted(() => {
   fetch(`${props.baseURL}/v1/mods/search?gameId=1`, init)
     .then(response => response.json())
     .then(data => {
       loading.value = false;
-      console.log(data);
-      listAddons.value = data.data;
+      listAddonsByVersion(data.data);
     })
     .catch(error => {
       console.log(error);

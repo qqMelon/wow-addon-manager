@@ -48,7 +48,10 @@ onMounted(() => {
                 <div class="flex h-full flex-col overflow-y-scroll bg-primary-bg py-6 shadow-xl">
                   <div class="flex flex-row items-center px-4 sm:px-6">
                     <img class="h-10 rounded" :src="props.addon.logo.thumbnailUrl" :alt="props.addon.name">
-                    <DialogTitle class="text-lg font-medium ml-3 text-white"> {{ props.addon.name}} </DialogTitle>
+                    <div class="title-container flex flex-col">
+                      <DialogTitle class="text-lg font-medium ml-3 text-white"> {{ props.addon.name}} </DialogTitle>
+                      <span class="text-md text-white font-light ml-3">By {{ props.addon.authors[0].name }}</span>
+                    </div>
                   </div>
                   <div class="px-4 sm:px-6 mt-2">
                     <span v-for="category in props.addon.categories" class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
